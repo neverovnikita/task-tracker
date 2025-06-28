@@ -1,0 +1,79 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+# Игнорируем файлы IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+*.sw?
+.vscode/
+*.code-workspace
+
+# Игнорируем сборочные директории
+target/
+build/
+out/
+bin/
+
+# Игнорируем логи и временные файлы
+*.log
+*.tmp
+*.bak
+
+# Игнорируем файлы зависимостей
+*.jar
+*.war
+*.ear
+
+# Игнорируем файлы свойств с чувствительными данными
+application*.properties
+application*.yml
+*.keystore
+*.jks
+
+# Игнорируем системные файлы
+.DS_Store
+Thumbs.db
+
+# Игнорируем node_modules (если есть фронтенд)
+node_modules/
+
+# Игнорируем файлы базы данных (H2 и другие)
+*.db
+*.h2.db
