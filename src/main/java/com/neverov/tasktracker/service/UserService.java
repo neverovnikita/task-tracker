@@ -15,12 +15,15 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     public User getUserById(UUID id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id).orElse(null);
     }
+
     public User createUser(User user) {
         return userRepository.save(user);
     }
+
     public String deleteUser(UUID id) {
         userRepository.deleteById(id);
         return "User deleted: " + id;

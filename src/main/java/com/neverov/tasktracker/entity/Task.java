@@ -1,6 +1,5 @@
 package com.neverov.tasktracker.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.neverov.tasktracker.enums.TaskPriority;
 import com.neverov.tasktracker.enums.TaskStatus;
 import jakarta.persistence.Column;
@@ -13,11 +12,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -32,8 +31,8 @@ public class Task {
     private UUID id;
 
     @Setter
-    @Column(nullable = false)
     @NotBlank(message = "Title не может быть пустым")
+    @Column(nullable = false, length = 100)
     private String title;
 
     @Setter
@@ -46,10 +45,13 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Setter
+    @NonNull
     private TaskPriority priority;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @NotNull
     private User author;
 
     @ManyToOne
@@ -62,17 +64,12 @@ public class Task {
     @Setter
     private Instant updatedAt = Instant.now();
 
-    public Task(String title, String description, TaskStatus status, TaskPriority priority,
-                User author, User assignee) {
+    public Task(String title, String description, TaskPriority priority, @NonNull User author, @NonNull User assignee) {
         this.title = title;
         this.description = description;
         this.status = TaskStatus.NEW;
         setPriority(priority);
         this.author = author;
         this.assignee = assignee;
-    }
-
-    public void setPriority(TaskPriority priority) {
-        this.priority = Objects.requireNonNullElse(priority, TaskPriority.UNKNOWN);
     }
 }

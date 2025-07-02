@@ -21,21 +21,26 @@ import java.util.UUID;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUser(@PathVariable UUID id){
+    public ResponseEntity<UserResponseDto> getUser(@PathVariable UUID id) {
         User user = userService.getUserById(id);
-        return ResponseEntity.ok(new UserResponseDto(user));
+        return user != null ? ResponseEntity.ok(new UserResponseDto(user))
+                : ResponseEntity.notFound().build();
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable UUID id){
+    public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.deleteUser(id));
     }
+
     @PostMapping
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserCreateDto request){
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserCreateDto request) {
         User user = userService.createUser(new User(request.getUsername(), request.getEmail()));
         return ResponseEntity.ok(new UserResponseDto(user));
     }
