@@ -1,4 +1,4 @@
-package com.neverov.tasktracker.controller.dto;
+package com.neverov.tasktracker.controller.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

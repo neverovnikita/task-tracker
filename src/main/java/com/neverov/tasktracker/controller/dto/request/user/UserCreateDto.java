@@ -1,4 +1,4 @@
-package com.neverov.tasktracker.controller.dto;
+package com.neverov.tasktracker.controller.dto.request.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;

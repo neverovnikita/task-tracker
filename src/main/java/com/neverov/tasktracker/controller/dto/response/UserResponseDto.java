@@ -1,4 +1,4 @@
-package com.neverov.tasktracker.controller.dto;
+package com.neverov.tasktracker.controller.dto.response;
 
 import com.neverov.tasktracker.entity.User;
 import com.neverov.tasktracker.enums.UserRole;

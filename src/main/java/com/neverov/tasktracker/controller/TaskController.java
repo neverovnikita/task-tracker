@@ -1,6 +1,6 @@
 package com.neverov.tasktracker.controller;
 
-import com.neverov.tasktracker.controller.dto.TaskCreateDto;
+import com.neverov.tasktracker.controller.dto.request.TaskCreateDto;
 import com.neverov.tasktracker.entity.Task;
 import com.neverov.tasktracker.entity.User;
 import com.neverov.tasktracker.enums.TaskPriority;
