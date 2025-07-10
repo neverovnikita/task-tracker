@@ -1,12 +1,11 @@
 package com.neverov.tasktracker.controller;
 
-import com.neverov.tasktracker.controller.dto.request.TaskCreateDto;
+import com.neverov.tasktracker.controller.dto.request.task.TaskCreateDto;
+import com.neverov.tasktracker.controller.dto.response.TaskResponseDto;
 import com.neverov.tasktracker.entity.Task;
-import com.neverov.tasktracker.entity.User;
-import com.neverov.tasktracker.enums.TaskPriority;
 import com.neverov.tasktracker.service.TaskService;
-import com.neverov.tasktracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,31 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("api/tasks")
 public class TaskController {
     private final TaskService taskService;
-    private final UserService userService;
 
     @Autowired
-    public TaskController(TaskService taskService, UserService userService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
-        this.userService = userService;
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable UUID id) {
-        return taskService.getTaskById(id);
+    public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable UUID id) {
+        Optional<Task> taskOpt = taskService.getTaskById(id);
+        return taskOpt.isPresent() ? ResponseEntity.ok(new TaskResponseDto(taskOpt.get()))
+                : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public Task createTask(@RequestBody TaskCreateDto dto) {
-        User author = userService.getUserById(dto.getAuthorId());
-        User assignee = userService.getUserById(dto.getAssigneeId());
-        Task task = new Task(dto.getTitle(), dto.getDescription(), TaskPriority.UNKNOWN, author, assignee);
-        return taskService.createTask(task);
+    public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskCreateDto dto) {
+        return ResponseEntity.ok(new TaskResponseDto(taskService.createTask(dto)));
     }
 
     @GetMapping("author/{id}")

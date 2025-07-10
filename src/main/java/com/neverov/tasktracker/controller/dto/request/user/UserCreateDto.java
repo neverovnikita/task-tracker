@@ -14,6 +14,7 @@ import lombok.Setter;
 public class UserCreateDto {
     @Size(min = 5, max = 25, message = "Username должен быть 5 - 25 символов")
     private String username;
+
     @Email(message = "Некорректный email")
     private String email;
 }
