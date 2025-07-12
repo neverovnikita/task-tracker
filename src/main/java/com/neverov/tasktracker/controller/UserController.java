@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -33,15 +34,14 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable UUID id) {
-        User user = userService.getUserById(id);
-        return user != null ? ResponseEntity.ok(new UserResponseDto(user))
-                : ResponseEntity.notFound().build();
+        Optional<User> userOpt = userService.getUserById(id);
+        return userOpt.map(user -> ResponseEntity.ok(new UserResponseDto(user))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok("Deleted user with id: " + id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping

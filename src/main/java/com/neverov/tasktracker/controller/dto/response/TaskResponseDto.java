@@ -4,7 +4,7 @@ import com.neverov.tasktracker.entity.Task;
 import com.neverov.tasktracker.enums.TaskPriority;
 import com.neverov.tasktracker.enums.TaskStatus;
 import lombok.Data;
-
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -16,6 +16,8 @@ public class TaskResponseDto {
     private TaskPriority priority;
     private UUID authorId;
     private UUID assigneeId;
+    private Instant createdAt;
+    private Instant updatedAt;
 
     public TaskResponseDto(Task task) {
         this.id = task.getId();
@@ -25,5 +27,7 @@ public class TaskResponseDto {
         this.priority = task.getPriority();
         this.assigneeId  = task.getAssignee().getId();
         this.authorId = task.getAuthor().getId();
+        this.createdAt = task.getCreatedAt();
+        this.updatedAt = task.getUpdatedAt();
     }
 }

@@ -104,7 +104,7 @@ public class TaskService {
                     break;
                 }
                 case "assigneeId": {
-                    Optional<User> assigneeOpt = userService.getUserById((UUID) entry.getValue());
+                    Optional<User> assigneeOpt = userService.getUserById(UUID.fromString(entry.getValue().toString()));
                     if (assigneeOpt.isPresent()) {
                         beforeTask.setAssignee(assigneeOpt.get());
                     } else throw new RuntimeException("Assignee not found with id: " + entry.getValue());
@@ -123,8 +123,9 @@ public class TaskService {
                     throw new RuntimeException("Invalid key: " + entry.getKey());
                 }
             }
-            beforeTask.setUpdatedAt(Instant.now());
+
         }
+        beforeTask.setUpdatedAt(Instant.now());
         return taskRepository.save(beforeTask);
     }
 }
